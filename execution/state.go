@@ -5,7 +5,7 @@ import (
 	"github.com/holiman/uint256"
 )
 type State struct {
-	mu             sync.RWMutex
+	mu             sync.RWMutex	
 	blocks         map[uint64]*common.Block
 	finalizedBlock *common.Block
 	hashes         map[[32]byte]uint64
