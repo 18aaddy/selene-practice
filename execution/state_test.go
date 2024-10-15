@@ -314,7 +314,10 @@ func TestGetCoinbase(t *testing.T) {
 	finalizedBlockChan := make(chan *common.Block)
 	state := NewState(5, blockChan, finalizedBlockChan)
 
-	address, _ := hex.DecodeString("0xeccf26e9F5474882a671D6136B32BE1DF8b2CDda")
+	address, err := hex.DecodeString("eccf26e9F5474882a671D6136B32BE1DF8b2CDda")
+	if err != nil {
+		t.Errorf("Error in converting address string to bytes")
+	}
 	coinbase := common.Address{Addr: [20]byte(address)}
 	block := &common.Block{
 		Number: 1,
