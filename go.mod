@@ -1,4 +1,4 @@
-module github.com/18aaddy/selene-practics
+module github.com/18aaddy/selene-practice
 
 go 1.22
 

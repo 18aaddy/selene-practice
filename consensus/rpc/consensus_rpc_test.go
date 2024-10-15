@@ -1,10 +1,11 @@
 package rpc
 
 import (
-	"github.com/18aaddy/selene-practics/consensus/consensus_core"
+	"testing"
+
+	"github.com/18aaddy/selene-practice/consensus/consensus_core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"testing"
 )
 
 // MockConsensusRpc is a mock implementation of the ConsensusRpc interface

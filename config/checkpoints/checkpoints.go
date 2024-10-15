@@ -4,9 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/18aaddy/selene-practics/config"
-	"github.com/avast/retry-go"
-	"gopkg.in/yaml.v2"
 	"io"
 	"log"
 	"net/http"
@@ -14,6 +11,10 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/18aaddy/selene-practice/config"
+	"github.com/avast/retry-go"
+	"gopkg.in/yaml.v2"
 )
 
 // / The location where the list of checkpoint services are stored.

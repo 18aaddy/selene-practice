@@ -3,11 +3,12 @@ package checkpoints
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/18aaddy/selene-practics/config"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/18aaddy/selene-practice/config"
 )
 
 type CustomTransport struct {

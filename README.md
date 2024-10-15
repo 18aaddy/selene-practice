@@ -1,9 +1,9 @@
-![tests](https://github.com/18aaddy/selene-practics/actions/workflows/test.yml/badge.svg)
-![linter](https://github.com/18aaddy/selene-practics/actions/workflows/cilint.yml/badge.svg)
+![tests](https://github.com/18aaddy/selene-practice/actions/workflows/test.yml/badge.svg)
+![linter](https://github.com/18aaddy/selene-practice/actions/workflows/cilint.yml/badge.svg)
 
 # Introduction
 
-Selene is a fast, open source, portable & secure light client for Ethereum written in Golang. We plan to ship Selene as the underlying software behind wallets that use light clients. We derived our inspiration from [Helios](https://github.com/a16z/helios) which is a light client written in Rust. The project is in active maintenance on the [dev](https://github.com/18aaddy/selene-practics/tree/dev) branch. 
+Selene is a fast, open source, portable & secure light client for Ethereum written in Golang. We plan to ship Selene as the underlying software behind wallets that use light clients. We derived our inspiration from [Helios](https://github.com/a16z/helios) which is a light client written in Rust. The project is in active maintenance on the [dev](https://github.com/18aaddy/selene-practice/tree/dev) branch. 
 
 # Architecture
 ![Selene Architecture](https://github.com/user-attachments/assets/db7eb9d7-5bc3-4911-a849-1b2d05239942)
@@ -55,4 +55,4 @@ In progress.
 Selene is still experimental software. We hope to ship v0.1 by November 2024.
 
 # Contributing
-We openly welcome contributions to selene from the broader ethereum community. For details, refer [CONTRIBUTION GUIDELINES](https://github.com/18aaddy/selene-practics/blob/dev/CONTRIBUTING.md).
+We openly welcome contributions to selene from the broader ethereum community. For details, refer [CONTRIBUTION GUIDELINES](https://github.com/18aaddy/selene-practice/blob/dev/CONTRIBUTING.md).

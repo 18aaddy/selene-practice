@@ -2,9 +2,10 @@ package consensus
 
 import (
 	"errors"
-	"github.com/18aaddy/selene-practics/config"
 	"os"
 	"path/filepath"
+
+	"github.com/18aaddy/selene-practice/config"
 )
 
 type Database interface {

@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/18aaddy/selene-practics/consensus/consensus_core"
+	"github.com/18aaddy/selene-practice/consensus/consensus_core"
 	"github.com/spf13/viper"
 )
 

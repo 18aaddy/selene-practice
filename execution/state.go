@@ -1,9 +1,10 @@
 package execution
 
 import (
-	"github.com/18aaddy/selene-practics/common"
-	"github.com/holiman/uint256"
 	"sync"
+
+	"github.com/18aaddy/selene-practice/common"
+	"github.com/holiman/uint256"
 )
 
 type State struct {

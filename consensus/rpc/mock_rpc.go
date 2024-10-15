@@ -5,9 +5,10 @@ package rpc
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/18aaddy/selene-practics/consensus/consensus_core"
 	"os"
 	"path/filepath"
+
+	"github.com/18aaddy/selene-practice/consensus/consensus_core"
 )
 
 type MockRpc struct {

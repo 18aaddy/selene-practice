@@ -1,7 +1,7 @@
 package execution
 
 import (
-	seleneCommon "github.com/18aaddy/selene-practics/common"
+	seleneCommon "github.com/18aaddy/selene-practice/common"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"

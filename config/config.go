@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 
-	"github.com/18aaddy/selene-practics/consensus/consensus_core"
-	"github.com/18aaddy/selene-practics/utils"
+	"github.com/18aaddy/selene-practice/consensus/consensus_core"
+	"github.com/18aaddy/selene-practice/utils"
 	"github.com/spf13/viper"
 )
 
