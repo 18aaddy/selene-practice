@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
+	"github.com/18aaddy/selene-practics/consensus/consensus_core"
 )
 
 // uses types package

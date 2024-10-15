@@ -5,7 +5,7 @@ package rpc
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
+	"github.com/18aaddy/selene-practics/consensus/consensus_core"
 	"os"
 	"path/filepath"
 )
@@ -13,6 +13,7 @@ import (
 type MockRpc struct {
 	testdata string
 }
+
 func NewMockRpc(path string) *MockRpc {
 	return &MockRpc{
 		testdata: path,

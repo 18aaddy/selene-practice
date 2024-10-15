@@ -1,6 +1,8 @@
-module github.com/BlocSoc-iitr/selene
+module github.com/18aaddy/selene-practics
 
-go 1.18
+go 1.22
+
+toolchain go1.23.1
 
 require (
 	github.com/avast/retry-go v3.0.0+incompatible

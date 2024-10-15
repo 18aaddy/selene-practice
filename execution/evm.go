@@ -16,11 +16,14 @@ import (
 	"github.com/ethereum/go-ethereum/triedb"	
 	"github.com/ethereum/go-ethereum/core/stateless"
 
-	"github.com/BlocSoc-iitr/selene/common"
+	"github.com/18aaddy/selene-practics/common"
+
 )
 type B256 = Common.Hash
 type U256 = big.Int
-
+type HeaderReader interface {
+	GetHeader(hash B256, number uint64) *types.Header
+}
 type Evm struct {
 	execution *ExecutionClient
 	chainID   uint64
@@ -33,11 +36,6 @@ func NewEvm(execution *ExecutionClient, chainID uint64, tag common.BlockTag) *Ev
 		tag:       tag,
 	}
 }
-
-// TODO: Call and EstimateGas function for Evm struct
-func (e *Evm) Call(opts *CallOpts) ([]byte,error){	}
-
-
 func (e *Evm) CallInner(opts *CallOpts) ([]byte, error) {
 	txContext := vm.TxContext{
 		Origin:   *opts.From,
@@ -48,28 +46,26 @@ func (e *Evm) CallInner(opts *CallOpts) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	blockContext := vm.BlockContext{
 		CanTransfer: core.CanTransfer,
 		Transfer:    core.Transfer,
 		GetHash: func(n uint64) B256 {
 			return B256{} // You might want to implement this properly
 		},
-		Coinbase:    Common.BytesToAddress(block.Miner.Addr[:]),
+		Coinbase:    ,
 		BlockNumber: new(U256).SetUint64(block.Number),
 		Time:        block.Timestamp,
 		Difficulty:  block.Difficulty.ToBig(),
 		GasLimit:    block.GasLimit,
 		BaseFee:     block.BaseFeePerGas.ToBig(),
 	}
-	
 	db:= rawdb.NewMemoryDatabase()
 	tdb:= triedb.NewDatabase(db, nil)
-	sdb:= state.NewDatabase(tdb)
+	sdb:= state.NewDatabase(tdb, nil)
 	//root:= trie.NewSecure(common.Hash{}, trie.NewDatabase(sdb))
 	state, err := state.New(types.EmptyRootHash, sdb)
-	witness:=stateless.NewWitness(block,)
-	state.StartPrefetcher("hello",witness)
+	//witness:=stateless.NewWitness(block,)
+	//state.StartPrefetcher("hello",witness)
 	// Create a new vm object
 	var chainConfig *params.ChainConfig
 	chainID:=e.chainID
@@ -90,8 +86,13 @@ func (e *Evm) CallInner(opts *CallOpts) ([]byte, error) {
 		//	"github.com/ethereum/go-ethereum/params"
 
 	config:= vm.Config{}
+	//Prefetch database: 
+	var witness *stateless.Witness
+	witness,err = stateless.NewWitness(chainConfig,block)
+	state.StartPrefetcher("evm", witness)
 	evm := vm.NewEVM(blockContext,txContext,state,chainConfig,config)
-
+	
+/*
 	msg := core.Message{
         From:     *opts.From,
         To:       opts.To,
@@ -112,7 +113,7 @@ func (e *Evm) CallInner(opts *CallOpts) ([]byte, error) {
         }
 
         // Apply the message
-        ret, err := core.ApplyMessage(evm, &msg, gp)
+        ret, err := core.ApplyMessage(evm, msg, gp)
         if err != nil {
             return nil, err
         }
@@ -121,9 +122,10 @@ func (e *Evm) CallInner(opts *CallOpts) ([]byte, error) {
 
         // If the transaction failed, we continue the loop to retry
         // You might want to add a max retry count to prevent infinite loops
-    }
+    }*/
 }
 
+func (e *Evm) Call(opts *CallOpts) ([]byte,error){	}
 type stateDatabase struct {
 	db ethdb.Database
 }

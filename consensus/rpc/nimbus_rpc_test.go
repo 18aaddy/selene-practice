@@ -1,14 +1,16 @@
 package rpc
+
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/18aaddy/selene-practics/consensus/consensus_core"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
+
 func TestNewNimbusRpc(t *testing.T) {
 	rpcURL := "http://example.com"
 	nimbusRpc := NewNimbusRpc(rpcURL)

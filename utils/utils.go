@@ -13,8 +13,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
-	"github.com/BlocSoc-iitr/selene/utils/bls"
+	"github.com/18aaddy/selene-practics/consensus/consensus_core"
+	"github.com/18aaddy/selene-practics/utils/bls"
 
 	bls12381 "github.com/consensys/gnark-crypto/ecc/bls12-381"
 	"github.com/pkg/errors"

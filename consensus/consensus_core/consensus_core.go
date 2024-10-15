@@ -3,7 +3,7 @@ package consensus_core
 import (
 	"bytes"
 
-	"github.com/BlocSoc-iitr/selene/consensus/types"
+	"github.com/18aaddy/selene-practics/consensus/types"
 	"github.com/ugorji/go/codec"
 )
 

@@ -7,8 +7,8 @@ import (
 
 	"errors"
 
-	seleneCommon "github.com/BlocSoc-iitr/selene/common"
-	"github.com/BlocSoc-iitr/selene/utils"
+	seleneCommon "github.com/18aaddy/selene-practics/common"
+	"github.com/18aaddy/selene-practics/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"

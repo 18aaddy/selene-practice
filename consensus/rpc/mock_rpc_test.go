@@ -1,12 +1,14 @@
 package rpc
+
 import (
 	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
 
-	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
+	"github.com/18aaddy/selene-practics/consensus/consensus_core"
 )
+
 func TestNewMockRpc(t *testing.T) {
 	path := "/tmp/testdata"
 	mockRpc := NewMockRpc(path)

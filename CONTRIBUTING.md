@@ -4,7 +4,7 @@ We really appreciate and value contributions to Selene. Please take time to revi
 
 ## Contribution guidelines
 
-Before starting development, please [create an issue](https://github.com/BlocSoc-iitr/selene/issues/new/choose) to open the discussion, validate that the PR is wanted, and coordinate overall implementation details.
+Before starting development, please [create an issue](https://github.com/18aaddy/selene-practics/issues/new/choose) to open the discussion, validate that the PR is wanted, and coordinate overall implementation details.
 
 ## Creating Pull Requests (PRs)
 
@@ -16,7 +16,7 @@ As a contributor, you are expected to fork this repository, work on your own for
 
    ```sh
    cd selene
-   git remote add origin https://github.com/BlocSoc-iitr/selene
+   git remote add origin https://github.com/18aaddy/selene-practics
    git fetch origin
    git pull --rebase origin dev
    ```
@@ -49,7 +49,7 @@ As a contributor, you are expected to fork this repository, work on your own for
    gofmt
    ```
 
-6. Go to [Selene](https://github.com/BlocSoc-iitr/selene) in your web browser and issue a new pull request.
+6. Go to [Selene](https://github.com/18aaddy/selene-practics) in your web browser and issue a new pull request.
    Begin the body of the PR with "Fixes #123" or "Resolves #123" to link the PR to the issue that it is resolving.
 
 7. Maintainers will review your code and possibly ask for changes before your code is pulled in to the main repository. We'll check that all tests pass, review the coding style, and check for general code correctness. If everything is OK, we'll merge your pull request and your code will be part of Selene.
@@ -58,8 +58,8 @@ As a contributor, you are expected to fork this repository, work on your own for
 
 ## All set
 
-If you have any questions, feel free to post them as an [issue](https://github.com/BlocSoc-iitr/selene/issues).
+If you have any questions, feel free to post them as an [issue](https://github.com/18aaddy/selene-practics/issues).
 
-Finally, if you're looking to collaborate and want to find easy tasks to start, look at the issues we marked as ["Good first issue"](https://github.com/BlocSoc-iitr/selene/labels/good%20first%20issue).
+Finally, if you're looking to collaborate and want to find easy tasks to start, look at the issues we marked as ["Good first issue"](https://github.com/18aaddy/selene-practics/labels/good%20first%20issue).
 
 Thanks for your time and code!

@@ -1,11 +1,13 @@
 package execution
+
 import (
-	"sync"
-	"github.com/BlocSoc-iitr/selene/common"
+	"github.com/18aaddy/selene-practics/common"
 	"github.com/holiman/uint256"
+	"sync"
 )
+
 type State struct {
-	mu             sync.RWMutex	
+	mu             sync.RWMutex
 	blocks         map[uint64]*common.Block
 	finalizedBlock *common.Block
 	hashes         map[[32]byte]uint64
@@ -16,6 +18,7 @@ type TransactionLocation struct {
 	Block uint64
 	Index int
 }
+
 func NewState(historyLength uint64, blockChan <-chan *common.Block, finalizedBlockChan <-chan *common.Block) *State {
 	s := &State{
 		blocks:        make(map[uint64]*common.Block),

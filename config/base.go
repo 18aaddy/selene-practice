@@ -1,6 +1,6 @@
 package config
 
-import "github.com/BlocSoc-iitr/selene/consensus/consensus_core"
+import "github.com/18aaddy/selene-practics/consensus/consensus_core"
 
 // base config for a network
 
