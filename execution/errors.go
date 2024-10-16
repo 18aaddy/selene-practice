@@ -3,8 +3,8 @@ package execution
 import (
 	"fmt"
 
-	"github.com/18aaddy/selene-practice/consensus/consensus_core"
-	"github.com/18aaddy/selene-practice/consensus/types"
+	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
+	"github.com/BlocSoc-iitr/selene/consensus/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 

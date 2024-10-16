@@ -1,4 +1,4 @@
-module github.com/18aaddy/selene-practice
+module github.com/BlocSoc-iitr/selene
 
 go 1.22
 

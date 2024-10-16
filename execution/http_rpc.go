@@ -3,7 +3,7 @@ package execution
 import (
 	"strconv"
 
-	seleneCommon "github.com/18aaddy/selene-practice/common"
+	seleneCommon "github.com/BlocSoc-iitr/selene/common"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"

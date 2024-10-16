@@ -3,7 +3,7 @@ package execution
 import (
 	"sync"
 
-	"github.com/18aaddy/selene-practice/common"
+	"github.com/BlocSoc-iitr/selene/common"
 	"github.com/holiman/uint256"
 )
 

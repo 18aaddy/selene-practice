@@ -1,7 +1,7 @@
 package rpc
 
 import (
-	"github.com/18aaddy/selene-practice/consensus/consensus_core"
+	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
 )
 
 // return types not mention and oarameters as well

@@ -5,7 +5,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/18aaddy/selene-practice/common"
+	"github.com/BlocSoc-iitr/selene/common"
 	"github.com/holiman/uint256"
 	"github.com/stretchr/testify/assert"
 )

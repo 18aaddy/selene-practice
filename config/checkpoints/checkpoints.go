@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/18aaddy/selene-practice/config"
+	"github.com/BlocSoc-iitr/selene/config"
 	"github.com/avast/retry-go"
 	"gopkg.in/yaml.v2"
 )

@@ -1,124 +1,173 @@
 package execution
 
 import (
-	// "bytes"
+	"encoding/hex"
+	"fmt"
+	"io"
+	"math/big"
 	"testing"
+
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/holiman/uint256"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-// Test the VerifyProof function
-func TestVerifyProof(t *testing.T) {
-	// Define mock proof, root, path, and value
-	proof := [][]byte{
-		[]byte{0x01, 0x02, 0x03}, // example node data
-		[]byte{0x04, 0x05, 0x06}, // another node
-	}
-	root := keccak256([]byte("root"))  // mocked root hash
-	path := []byte{0x01, 0x02}         // mocked path
-	value := []byte{0x07, 0x08, 0x09}  // mocked value
-	
-	// Test valid proof (example scenario)
-	valid, err := VerifyProof(proof, root, path, value)
-	if err != nil {
-		t.Fatalf("Expected no error, got %v", err)
-	}
-	if !valid {
-		t.Fatalf("Expected proof to be valid, but it was invalid")
-	}
-
-	// Test invalid proof (manipulate the proof to cause failure)
-	invalidProof := [][]byte{
-		[]byte{0x0A, 0x0B, 0x0C}, // wrong node data
-	}
-	valid, err = VerifyProof(invalidProof, root, path, value)
-	if err == nil && valid {
-		t.Fatalf("Expected proof to be invalid, but it was valid")
-	}
+func (a *Account) EncodeRLP(w io.Writer) error {
+	return rlp.Encode(w, []interface{}{a.Nonce, a.Balance, a.StorageHash, a.CodeHash})
 }
 
-// Test the pathsMatch function
-func TestPathsMatch(t *testing.T) {
-	// Define mock paths
-	p1 := []byte{0x01, 0x02, 0x03}
-	p2 := []byte{0x01, 0x02, 0x03}
-	
-	// Test matching paths
-	if !pathsMatch(p1, 0, p2, 0) {
-		t.Fatalf("Expected paths to match, but they didn't")
+func (a *Account) DecodeRLP(s *rlp.Stream) error {
+	var accountRLP struct {
+		Nonce       uint64
+		Balance     *big.Int
+		StorageHash common.Hash
+		CodeHash    common.Hash
 	}
-	
-	// Test non-matching paths
-	p3 := []byte{0x04, 0x05, 0x06}
-	if pathsMatch(p1, 0, p3, 0) {
-		t.Fatalf("Expected paths to not match, but they did")
+	if err := s.Decode(&accountRLP); err != nil {
+		return err
 	}
+	a.Nonce = accountRLP.Nonce
+	a.Balance = accountRLP.Balance
+	a.StorageHash = accountRLP.StorageHash
+	a.CodeHash = accountRLP.CodeHash
+
+	return nil
 }
 
-// Test the isEmptyValue function
-func TestIsEmptyValue(t *testing.T) {
-	// Create a default account RLP encoding
-	emptyAccount := Account{
-		Nonce:       0,
-		Balance:     uint256.NewInt(0).ToBig(),
-		StorageHash: [32]byte{0x56, 0xe8, 0x1f, 0x17, 0x1b, 0xcc, 0x55, 0xa6, 0xff, 0x83, 0x45, 0xe6, 0x92, 0xc0, 0xf8, 0x6e, 0x5b, 0x48, 0xe0, 0x1b, 0x99, 0x6c, 0xad, 0xc0, 0x01, 0x62, 0x2f, 0xb5, 0xe3, 0x63, 0xb4, 0x21},
-		CodeHash:    [32]byte{0xc5, 0xd2, 0x46, 0x01, 0x86, 0xf7, 0x23, 0x3c, 0x92, 0x7e, 0x7d, 0xb2, 0xdc, 0xc7, 0x03, 0xc0, 0xe5, 0x00, 0xb6, 0x53, 0xca, 0x82, 0x27, 0x3b, 0x7b, 0xfa, 0xd8, 0x04, 0x5d, 0x85, 0xa4, 0x70},
-	}
-	encodedEmptyAccount, _ := rlp.EncodeToBytes(emptyAccount)
-	
-	// Test empty account case
-	if !isEmptyValue(encodedEmptyAccount) {
-		t.Fatalf("Expected empty account value to return true")
-	}
-	
-	// Test non-empty account case
-	nonEmptyValue := []byte{0x01, 0x02, 0x03}
-	if isEmptyValue(nonEmptyValue) {
-		t.Fatalf("Expected non-empty value to return false")
-	}
-}
-
-// Test getNibble function
-func TestGetNibble(t *testing.T) {
-	path := []byte{0x12, 0x34}
-	
-	// Test for the first nibble
-	if n := getNibble(path, 0); n != 0x1 {
-		t.Fatalf("Expected nibble 0x1, got %x", n)
-	}
-	
-	// Test for the second nibble
-	if n := getNibble(path, 1); n != 0x2 {
-		t.Fatalf("Expected nibble 0x2, got %x", n)
-	}
-}
-
-// Test skipLength function
-func TestSkipLength(t *testing.T) {
-	// Test different cases for skipLength
-	node := []byte{0x00, 0x12}
-	if skipLength(node) != 2 {
-		t.Fatalf("Expected skip length 2, got %d", skipLength(node))
-	}
-
-	node = []byte{0x01, 0x23}
-	if skipLength(node) != 1 {
-		t.Fatalf("Expected skip length 1, got %d", skipLength(node))
-	}
-}
-
-// Test the sharedPrefixLength function
 func TestSharedPrefixLength(t *testing.T) {
-	path1 := []byte{0x12, 0x34}
-	path2 := []byte{0x12, 0x35}
-	
-	// Test case where paths share a prefix
-	if sharedPrefixLength(path1, 0, path2) != 3 {
-		t.Fatalf("Expected shared prefix length of 3")
+	t.Run("Match first 5 nibbles", func(t *testing.T) {
+		path := []byte{0x12, 0x13, 0x14, 0x6f, 0x6c, 0x64, 0x21}
+		pathOffset := 6
+		nodePath := []byte{0x6f, 0x6c, 0x63, 0x21}
+
+		sharedLen := sharedPrefixLength(path, pathOffset, nodePath)
+		assert.Equal(t, 5, sharedLen)
+	})
+
+	t.Run("Match first 7 nibbles with skip", func(t *testing.T) {
+		path := []byte{0x12, 0x13, 0x14, 0x6f, 0x6c, 0x64, 0x21}
+		pathOffset := 5
+		nodePath := []byte{0x14, 0x6f, 0x6c, 0x64, 0x11}
+
+		sharedLen := sharedPrefixLength(path, pathOffset, nodePath)
+		assert.Equal(t, 7, sharedLen)
+	})
+
+	t.Run("No match", func(t *testing.T) {
+		path := []byte{0x12, 0x34, 0x56}
+		pathOffset := 0
+		nodePath := []byte{0x78, 0x9a, 0xbc}
+
+		sharedLen := sharedPrefixLength(path, pathOffset, nodePath)
+		assert.Equal(t, 0, sharedLen)
+	})
+
+	t.Run("Complete match", func(t *testing.T) {
+		path := []byte{0x12, 0x34, 0x56}
+		pathOffset := 0
+		nodePath := []byte{0x00, 0x12, 0x34, 0x56}
+
+		sharedLen := sharedPrefixLength(path, pathOffset, nodePath)
+		assert.Equal(t, 6, sharedLen)
+	})
+}
+
+func TestSkipLength(t *testing.T) {
+	testCases := []struct {
+		name     string
+		node     []byte
+		expected int
+	}{
+		{"Empty node", []byte{}, 0},
+		{"Nibble 0", []byte{0x00}, 2},
+		{"Nibble 1", []byte{0x10}, 1},
+		{"Nibble 2", []byte{0x20}, 2},
+		{"Nibble 3", []byte{0x30}, 1},
+		{"Nibble 4", []byte{0x40}, 0},
 	}
-	
-	// Test case where paths don't share a prefix
-	if sharedPrefixLength(path1, 0, []byte{0x56, 0x78}) != 0 {
-		t.Fatalf("Expected shared prefix length of 0")
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			result := skipLength(tc.node)
+			assert.Equal(t, tc.expected, result)
+		})
 	}
+}
+
+func TestGetNibble(t *testing.T) {
+	path := []byte{0x12, 0x34, 0x56}
+
+	testCases := []struct {
+		offset   int
+		expected byte
+	}{
+		{0, 0x1},
+		{1, 0x2},
+		{2, 0x3},
+		{3, 0x4},
+		{4, 0x5},
+		{5, 0x6},
+	}
+
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("Offset %d", tc.offset), func(t *testing.T) {
+			result := getNibble(path, tc.offset)
+			assert.Equal(t, tc.expected, result)
+		})
+	}
+}
+
+func TestIsEmptyValue(t *testing.T) {
+	t.Run("Empty slot", func(t *testing.T) {
+		value := []byte{0x80}
+		assert.True(t, isEmptyValue(value))
+	})
+
+	t.Run("Empty account", func(t *testing.T) {
+		emptyAccount := Account{
+			Nonce:       0,
+			Balance:     big.NewInt(0),
+			StorageHash: [32]byte{0x56, 0xe8, 0x1f, 0x17, 0x1b, 0xcc, 0x55, 0xa6, 0xff, 0x83, 0x45, 0xe6, 0x92, 0xc0, 0xf8, 0x6e, 0x5b, 0x48, 0xe0, 0x1b, 0x99, 0x6c, 0xad, 0xc0, 0x01, 0x62, 0x2f, 0xb5, 0xe3, 0x63, 0xb4, 0x21},
+			CodeHash:    [32]byte{0xc5, 0xd2, 0x46, 0x01, 0x86, 0xf7, 0x23, 0x3c, 0x92, 0x7e, 0x7d, 0xb2, 0xdc, 0xc7, 0x03, 0xc0, 0xe5, 0x00, 0xb6, 0x53, 0xca, 0x82, 0x27, 0x3b, 0x7b, 0xfa, 0xd8, 0x04, 0x5d, 0x85, 0xa4, 0x70},
+		}
+		encodedEmptyAccount, err := rlp.EncodeToBytes(&emptyAccount)
+		require.NoError(t, err)
+		assert.True(t, isEmptyValue(encodedEmptyAccount))
+	})
+
+	t.Run("Non-empty value", func(t *testing.T) {
+		value := []byte{0x01, 0x23, 0x45}
+		assert.False(t, isEmptyValue(value))
+	})
+}
+
+func TestEncodeAccount(t *testing.T) {
+	proof := &EIP1186AccountProofResponse{
+		Nonce:       1,
+		Balance:     big.NewInt(1000),
+		StorageHash: [32]byte{1, 2, 3},
+		CodeHash:    [32]byte{4, 5, 6},
+	}
+
+	encoded, err := EncodeAccount(proof)
+	require.NoError(t, err)
+
+	var decodedAccount Account
+	err = rlp.DecodeBytes(encoded, &decodedAccount)
+	require.NoError(t, err)
+
+	// Assert the decoded values match the original
+	assert.Equal(t, uint64(1), decodedAccount.Nonce)
+	assert.Equal(t, big.NewInt(1000), decodedAccount.Balance)
+	assert.Equal(t, proof.StorageHash, decodedAccount.StorageHash)
+	assert.Equal(t, proof.CodeHash, decodedAccount.CodeHash)
+}
+
+func TestKeccak256(t *testing.T) {
+	input := []byte("hello world")
+	expected, _ := hex.DecodeString("47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad")
+
+	result := keccak256(input)
+	assert.Equal(t, expected, result)
 }

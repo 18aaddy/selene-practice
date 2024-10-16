@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/18aaddy/selene-practice/consensus/consensus_core"
+	"github.com/BlocSoc-iitr/selene/consensus/consensus_core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

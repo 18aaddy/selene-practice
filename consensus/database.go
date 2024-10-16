@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/18aaddy/selene-practice/config"
+	"github.com/BlocSoc-iitr/selene/config"
 )
 
 type Database interface {

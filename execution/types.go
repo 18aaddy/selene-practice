@@ -6,8 +6,8 @@ import (
 	"math/big"
 	"reflect"
 
-	seleneCommon "github.com/18aaddy/selene-practice/common"
-	"github.com/18aaddy/selene-practice/utils"
+	seleneCommon "github.com/BlocSoc-iitr/selene/common"
+	"github.com/BlocSoc-iitr/selene/utils"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/holiman/uint256"
